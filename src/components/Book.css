@@ -1,0 +1,49 @@
+.book {
+    width: 350px;
+    height: 450px;
+    position: relative;
+    transition-duration: 0.5s;
+    perspective: 1500px;
+}
+
+.cover, .back-cover {
+    background-color: #4173a5;
+    width: 100%;
+    height: 100%;
+    border-radius: 0 15px 15px 0;
+    box-shadow: 0 0 5px rgb(41, 41, 41);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center left;
+}
+
+.cover {
+    position: absolute;
+    transition: transform 0.5s;
+}
+
+.cover label {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.back-cover {
+    position: relative;
+    z-index: -1;
+}
+
+.book.open {
+    transform: translateX(200px);
+}
+
+.book.open .cover {
+    transition: transform 1.5s, z-index 0.5s 0.5s;
+    transform: rotateY(-180deg);
+    z-index: 1;
+}
+
+.book.open .page {
+    box-shadow: 0 0 3px rgb(99, 98, 98);
+}
