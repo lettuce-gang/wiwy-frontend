@@ -5,6 +5,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { ResultData, ResultType } from '../data/ResultData';
 import { getPostPosition } from '../utils/textUtils';
 import Container from "../components/Container.tsx";
+import Header from "../components/Header.tsx";
 
 const ResultCard = styled.div`
   width: 100%;
@@ -298,6 +299,7 @@ function Result() {
 
     return (
         <Container backgroundUrl="/images/background/orange.png">
+            <Header />
             <ResultCard ref={resultCardRef}>
                 <NameDescription>
                     {userName}{getPostPosition(userName)}

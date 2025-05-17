@@ -1,9 +1,7 @@
-import Container from "../components/Container.tsx";
+import IntroName from "./intro/IntroName.tsx";
 
 function Intro() {
-    return <Container backgroundUrl="/images/background/green.png">
-        Hello
-    </Container>;
+    return <IntroName />;
 }
 
 export default Intro;
