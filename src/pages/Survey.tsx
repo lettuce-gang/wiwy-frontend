@@ -9,7 +9,7 @@ function Survey() {
   const [step, setStep] = useState(0);
 
   return (
-    <Container backgroundUrl="/images/background/blue.svg">
+    <Container backgroundUrl="/images/background/blue.png">
       <Header />
       <ProgressBar step={step + 1} />
       <Book step={step} setStep={setStep} />

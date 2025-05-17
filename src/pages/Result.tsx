@@ -12,7 +12,7 @@ const ResultCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: url('/images/bg_orange.png');
+  background-image: url('/images/background/orange.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -297,7 +297,7 @@ function Result() {
     };
 
     return (
-        <Container backgroundUrl="/images/background/orange.svg">
+        <Container backgroundUrl="/images/background/orange.png">
             <ResultCard ref={resultCardRef}>
                 <NameDescription>
                     {userName}{getPostPosition(userName)}
