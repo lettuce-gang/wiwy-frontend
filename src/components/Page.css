@@ -1,8 +1,8 @@
 .page {
     position: absolute;
     background-color: white;
-    width: 330px;
-    height: 430px;
+    width: 336px;
+    height: 410px;
     border-radius: 0 15px 15px 0;
     margin-top: 10px;
     transform-origin: left;
@@ -10,6 +10,7 @@
     transform: rotateY(0deg);
     transition-duration: 0.3s;
 }
+
 
 .front-page {
     position: absolute;
