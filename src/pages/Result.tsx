@@ -1,53 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import html2canvas from 'html2canvas';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { ResultData, ResultType } from '../data/ResultData';
 import { getPostPosition } from '../utils/textUtils';
-import 'pretendard/dist/web/static/pretendard.css';
-
-const ResultContainer = styled.div`
-  width: 100%;
-  height: auto;
-  min-height: 100vh;
-  margin: 0 auto;
-  background-image: url('/images/bg_orange.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 40px 44px 20px; // 상단 패딩 더 늘림
-  overflow-y: auto;
-  box-sizing: border-box; // 박스 사이징 추가
-
-  /* Mobile (0px ~ 479px) */
-  @media screen and (max-width: 479px) {
-    width: 100%;
-    padding: 40px 20px 20px; // 상단 패딩 더 늘림
-    height: auto;
-    min-height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
-
-  /* Tablet (480px ~ 767px) */
-  @media screen and (min-width: 480px) {
-    width: 480px;
-    padding: 40px 0 20px; // 상단 패딩 더 늘림
-  }
-
-  /* Desktop (768px ~ ) */
-  @media screen and (min-width: 768px) {
-    width: 480px;
-    padding: 40px 0 20px; // 상단 패딩 더 늘림
-  }
-`;
+import Container from "../components/Container.tsx";
 
 const ResultCard = styled.div`
   width: 100%;
@@ -294,12 +251,12 @@ function Result() {
 
             // 캔버스를 이미지로 변환
             const image = canvas.toDataURL('image/png', 1.0);
-            
+
             // 다운로드 링크 생성
             const link = document.createElement('a');
             link.href = image;
             link.download = 'result-image.png';
-            
+
             // 다운로드 트리거
             document.body.appendChild(link);
             link.click();
@@ -315,7 +272,7 @@ function Result() {
 
     const handleShare = async () => {
         const currentUrl = window.location.href;
-        
+
         // Check if Web Share API is supported (mainly mobile devices)
         if (navigator.share) {
             try {
@@ -340,7 +297,7 @@ function Result() {
     };
 
     return (
-        <ResultContainer>
+        <Container backgroundUrl="/images/bg_orange.svg">
             <ResultCard ref={resultCardRef}>
                 <NameDescription>
                     {userName}{getPostPosition(userName)}
@@ -399,12 +356,12 @@ function Result() {
                     <ButtonIcon src="/images/retry.png" alt="다시하기" />
                 </ActionButton>
             </ButtonContainer>
-            
+
             {showCopyToast && (
                 <Toast>URL이 복사되었습니다!</Toast>
             )}
-        </ResultContainer>
+        </Container>
     );
 }
-    
+
 export default Result;

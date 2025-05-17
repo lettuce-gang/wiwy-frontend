@@ -1,8 +1,9 @@
-import Book from "../components/Book.tsx";
-
+import Container from "../components/Container.tsx";
 
 function Intro() {
-    return (<Book />)
+    return <Container backgroundUrl="/images/bg_green.svg">
+        Hello
+    </Container>;
 }
 
 export default Intro;

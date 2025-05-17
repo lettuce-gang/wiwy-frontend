@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import Survey from "./pages/Survey.tsx";
 import Result from "./pages/Result.tsx";
 import Intro from "./pages/Intro.tsx";
+import 'pretendard/dist/web/static/pretendard.css';
 
 function App() {
   return (
