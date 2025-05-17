@@ -66,3 +66,39 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* src/index.css */
+/* 박스 모델 통일 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* html, body 초기화 */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  font-family: sans-serif;
+}
+
+/* 미디어 요소 반응형 */
+img, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* 주 컨테이너 */
+.container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem; /* 필요시 좌우 여백 */
+}
+
+header, main, footer {
+  width: 100%;
+}
