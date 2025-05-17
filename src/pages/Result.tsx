@@ -1,0 +1,363 @@
+import React, { useRef, useEffect, useState } from 'react';
+import styled from 'styled-components';
+import html2canvas from 'html2canvas';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { ResultData, ResultType } from '../data/ResultData';
+import { getPostPosition } from '../utils/textUtils';
+
+const ResultContainer = styled.div`
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-image: url('/images/bg_orange.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 44px 20px; // 상단 패딩 더 늘림
+  overflow-y: auto;
+  box-sizing: border-box; // 박스 사이징 추가
+
+  /* Mobile (0px ~ 479px) */
+  @media screen and (max-width: 479px) {
+    width: 100%;
+    padding: 40px 20px 20px; // 상단 패딩 더 늘림
+    height: auto;
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  /* Tablet (480px ~ 767px) */
+  @media screen and (min-width: 480px) {
+    width: 480px;
+    padding: 40px 0 20px; // 상단 패딩 더 늘림
+  }
+
+  /* Desktop (768px ~ ) */
+  @media screen and (min-width: 768px) {
+    width: 480px;
+    padding: 40px 0 20px; // 상단 패딩 더 늘림
+  }
+`;
+
+const ResultCard = styled.div`
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url('/images/bg_orange.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 10px; // 상단 여백 추가
+
+  @media screen and (max-width: 479px) {
+    width: 100%;
+    padding: 20px 0;
+    margin-top: 0; // 모바일에서는 상단 여백 제거
+  }
+`;
+
+interface ResultImageProps {
+  image: string;
+}
+
+const ResultImage = styled.div<ResultImageProps>`
+  width: 90%;  // 너비를 90%로 줄여서 양옆 여백 확보
+  max-width: 450px;
+  aspect-ratio: 9/16;
+  background-image: ${props => `url(${props.image})`};
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 12px;
+  margin: 0 auto;  // 중앙 정렬
+
+  @media screen and (max-width: 479px) {
+    width: 85%;  // 모바일에서는 더 좁게
+    border-radius: 12px;  // 모바일에서도 border-radius 유지
+    margin: 0 auto;
+  }
+`;
+
+const NameDescription = styled.div`
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  color: #FFED2C;
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  font-family: 'Pretendard-Regular';
+`;
+
+const DownloadButton = styled.button`
+  width: 100%;
+  padding: 15px 0;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 0.7rem;
+  font-family: 'Pretendard-Regular';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  margin: 10px 0;
+
+  &:before {
+    content: '';
+    width: 15px;
+    height: 15px;
+    background-image: url('/images/download_button.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+`;
+
+const ContentSection = styled.div`
+  width: 100%;
+  max-width: 500px;
+  margin-top: 20px;
+  color: white;
+  font-family: 'Pretendard-Regular';
+
+  @media screen and (max-width: 479px) {
+    width: 100%;
+  }
+`;
+
+const SectionTitle = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  font-weight: bold;
+`;
+
+const SectionSubTitle = styled.div`
+  font-size: 0.8rem;
+  margin-left: 20px;
+  margin-bottom: 8px;
+  font-weight: bold;
+`;
+
+const SectionContent = styled.div`
+  font-size: 0.8rem;
+  margin-left: 20px;
+  margin-bottom: 16px;
+  line-height: 1.4;
+  opacity: 0.9;
+`;
+
+const ButtonContainer = styled.div`
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px; // 하단 여백 추가
+
+  @media screen and (max-width: 479px) {
+    width: 100%;
+  }
+`;
+
+const ActionButton = styled.button<{ isShare?: boolean }>`
+  width: 100%;
+  padding: 15px 0;
+  border-radius: 8px;
+  border: none;
+  font-family: 'Pretendard-Regular';
+  font-size: 0.9rem;
+  cursor: pointer;
+  background-color: ${props => props.isShare ? '#F35400' : 'black'};
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+`;
+
+const Toast = styled.div`
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    z-index: 1000;
+    font-family: 'Pretendard-Regular';
+`;
+
+function Result() {
+    const resultCardRef = useRef<HTMLDivElement>(null);
+    const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
+    const [resultData, setResultData] = useState<ResultType | null>(null);
+    const [userName, setUserName] = useState<string>('');
+    const [showCopyToast, setShowCopyToast] = useState(false);
+
+    useEffect(() => {
+        // URL에서 type과 name 파라미터 가져오기
+        const type = searchParams.get('type');
+        const name = searchParams.get('name');
+
+        // 파라미터가 없거나 유효하지 않은 경우 처리
+        if (!type || !ResultData[type]) {
+            navigate('/'); // 메인 페이지로 리다이렉트
+            return;
+        }
+
+        // 데이터 설정
+        setResultData(ResultData[type]);
+        setUserName(name || '');
+
+        // 페이지 최상단으로 스크롤
+        window.scrollTo(0, 0);
+    }, [searchParams, navigate]);
+
+    // resultData가 없는 경우 로딩 표시
+    if (!resultData) {
+        return <div>Loading...</div>;
+    }
+
+    const handleDownload = async () => {
+        if (!resultCardRef.current) return;
+
+        try {
+            // 이미지 캡처
+            const canvas = await html2canvas(resultCardRef.current, {
+                scale: 2, // 고화질을 위해 2배 크기로 렌더링
+                useCORS: true, // 외부 이미지 허용
+                allowTaint: true, // 외부 이미지 허용
+                backgroundColor: null,
+                logging: false,
+            });
+
+            // 캔버스를 이미지로 변환
+            const image = canvas.toDataURL('image/png', 1.0);
+            
+            // 다운로드 링크 생성
+            const link = document.createElement('a');
+            link.href = image;
+            link.download = 'result-image.png';
+            
+            // 다운로드 트리거
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch (error) {
+            console.error('이미지 저장 중 오류가 발생했습니다:', error);
+        }
+    };
+
+    const handleRetry = () => {
+        navigate('/');
+    };
+
+    const handleShare = async () => {
+        const currentUrl = window.location.href;
+        
+        // Check if Web Share API is supported (mainly mobile devices)
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: '나의 성향 테스트 결과',
+                    text: `${userName}님의 성향 테스트 결과를 확인해보세요!`,
+                    url: currentUrl
+                });
+            } catch (error) {
+                console.error('공유하기 실패:', error);
+            }
+        } else {
+            // Fallback for desktop: copy URL to clipboard
+            try {
+                await navigator.clipboard.writeText(currentUrl);
+                setShowCopyToast(true);
+                setTimeout(() => setShowCopyToast(false), 2000);
+            } catch (error) {
+                console.error('URL 복사 실패:', error);
+            }
+        }
+    };
+
+    return (
+        <ResultContainer>
+            <ResultCard ref={resultCardRef}>
+                <NameDescription>
+                    {userName}{getPostPosition(userName)}
+                </NameDescription>
+                <ResultImage image={resultData.image} />
+            </ResultCard>
+            <DownloadButton onClick={handleDownload}>
+                꾹 눌러 이미지를 저장해주세요!
+            </DownloadButton>
+
+            <ContentSection>
+                <SectionTitle>
+                    ✏️ 특징
+                </SectionTitle>
+                <SectionContent>
+                    {resultData.features.map((feature: string, index: number) => (
+                        <div key={index}>• {feature}</div>
+                    ))}
+                </SectionContent>
+
+                <SectionTitle>
+                    🌟 찰떡 친구
+                </SectionTitle>
+                <SectionSubTitle>
+                    {resultData.bestFriend.title}
+                </SectionSubTitle>
+                <SectionContent>
+                    {resultData.bestFriend.description.map((desc: string, index: number) => (
+                        <div key={index}>{desc}</div>
+                    ))}
+                </SectionContent>
+
+                <SectionTitle>
+                    🤯 상극 친구
+                </SectionTitle>
+                <SectionSubTitle>
+                    {resultData.worstFriend.title}
+                </SectionSubTitle>
+                <SectionContent>
+                    {resultData.worstFriend.description.map((desc: string, index: number) => (
+                        <div key={index}>{desc}</div>
+                    ))}
+                </SectionContent>
+            </ContentSection>
+
+            <ButtonContainer>
+                <ActionButton onClick={handleShare}>
+                    공유하기 ✨
+                </ActionButton>
+                <ActionButton isShare onClick={handleRetry}>다시하기 ↺</ActionButton>
+            </ButtonContainer>
+            
+            {showCopyToast && (
+                <Toast>URL이 복사되었습니다!</Toast>
+            )}
+        </ResultContainer>
+    );
+}
+    
+export default Result;
