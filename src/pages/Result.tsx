@@ -103,7 +103,6 @@ const NameDescription = styled.div`
 
 const DownloadButton = styled.button`
   width: 100%;
-  padding: 15px 0;
   background-color: transparent;
   border: none;
   color: white;
@@ -114,7 +113,6 @@ const DownloadButton = styled.button`
   justify-content: center;
   gap: 8px;
   cursor: pointer;
-  margin: 10px 0;
 
   &:before {
     content: '';
@@ -128,52 +126,87 @@ const DownloadButton = styled.button`
 `;
 
 const ContentSection = styled.div`
-  width: 100%;
-  max-width: 500px;
-  margin-top: 20px;
+  width: 90%;  // ResultCard와 동일한 너비로 설정
+  max-width: 450px;
+  margin: 20px auto 0;
   color: white;
   font-family: 'Pretendard-Regular';
 
   @media screen and (max-width: 479px) {
-    width: 100%;
+    width: 85%;  // 모바일에서는 더 좁게
   }
 `;
 
 const SectionTitle = styled.div`
+  margin-bottom: 6  px;
+  font-family: Pretendard;
+  color: #FFF;
+  font-size: 15px;
+  font-style: normal;
+  line-height: normal;
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
-  margin-bottom: 8px;
-  font-weight: bold;
+`;
+
+const TitleImage = styled.img`
+  height: 19px;
+  width: auto;
 `;
 
 const SectionSubTitle = styled.div`
-  font-size: 0.8rem;
   margin-left: 20px;
-  margin-bottom: 8px;
-  font-weight: bold;
+  color: #FFF;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.15px;
 `;
 
 const SectionContent = styled.div`
-  font-size: 0.8rem;
+  margin-top: 7px;
+  margin-bottom: 33px;
   margin-left: 20px;
-  margin-bottom: 16px;
-  line-height: 1.4;
-  opacity: 0.9;
+  color: rgba(255, 255, 255, 0.80);
+  font-family: Pretendard;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 153.846% */
+  letter-spacing: -0.13px;
+`;
+
+const FeatureContent = styled(SectionContent)`
+  margin-left: 5px;
+`;
+
+const FeatureItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 13px;  // bullet point와 텍스트 사이 간격
+`;
+
+const ButtonIcon = styled.img`
+  height: 20px;
+  width: auto;
+  margin-left: 6px;
+`;
+
+const ShareIcon = styled(ButtonIcon)`
+  transform: rotate(90deg);
 `;
 
 const ButtonContainer = styled.div`
-  width: 100%;
-  max-width: 500px;
+  width: 90%;  // ResultCard와 동일한 너비로 설정
+  max-width: 450px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 20px;
-  margin-bottom: 20px; // 하단 여백 추가
+  margin: 20px auto;  // 상하 여백 추가, 좌우 auto로 중앙 정렬
 
   @media screen and (max-width: 479px) {
-    width: 100%;
+    width: 85%;  // 모바일에서는 더 좁게
   }
 `;
 
@@ -182,8 +215,6 @@ const ActionButton = styled.button<{ isShare?: boolean }>`
   padding: 15px 0;
   border-radius: 8px;
   border: none;
-  font-family: 'Pretendard-Regular';
-  font-size: 0.9rem;
   cursor: pointer;
   background-color: ${props => props.isShare ? '#F35400' : 'black'};
   color: white;
@@ -191,6 +222,13 @@ const ActionButton = styled.button<{ isShare?: boolean }>`
   align-items: center;
   justify-content: center;
   gap: 8px;
+  color: #FFF;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 `;
 
 const Toast = styled.div`
@@ -313,16 +351,19 @@ function Result() {
 
             <ContentSection>
                 <SectionTitle>
-                    ✏️ 특징
+                    <TitleImage src="/images/feature_title.svg" alt="특징" />
                 </SectionTitle>
-                <SectionContent>
+                <FeatureContent>
                     {resultData.features.map((feature: string, index: number) => (
-                        <div key={index}>• {feature}</div>
+                        <FeatureItem key={index}>
+                            <span>•</span>
+                            <span>{feature}</span>
+                        </FeatureItem>
                     ))}
-                </SectionContent>
+                </FeatureContent>
 
                 <SectionTitle>
-                    🌟 찰떡 친구
+                    <TitleImage src="/images/bestFriend_title.svg" alt="찰떡 친구" />
                 </SectionTitle>
                 <SectionSubTitle>
                     {resultData.bestFriend.title}
@@ -334,7 +375,7 @@ function Result() {
                 </SectionContent>
 
                 <SectionTitle>
-                    🤯 상극 친구
+                    <TitleImage src="/images/worstFriend_title.svg" alt="상극 친구" />
                 </SectionTitle>
                 <SectionSubTitle>
                     {resultData.worstFriend.title}
@@ -348,9 +389,13 @@ function Result() {
 
             <ButtonContainer>
                 <ActionButton onClick={handleShare}>
-                    공유하기 ✨
+                    공유하기
+                    <ShareIcon src="/images/share.png" alt="공유하기" />
                 </ActionButton>
-                <ActionButton isShare onClick={handleRetry}>다시하기 ↺</ActionButton>
+                <ActionButton isShare onClick={handleRetry}>
+                    다시하기
+                    <ButtonIcon src="/images/retry.png" alt="다시하기" />
+                </ActionButton>
             </ButtonContainer>
             
             {showCopyToast && (
