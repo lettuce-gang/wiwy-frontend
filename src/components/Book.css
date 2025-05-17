@@ -1,9 +1,10 @@
 .book {
-    width: 350px;
-    height: 450px;
+    width: 345px;
+    height: 430px;
     position: relative;
     transition-duration: 0.5s;
     perspective: 1500px;
+    margin: 0 auto;
 }
 
 .cover, .back-cover {
@@ -35,7 +36,7 @@
 }
 
 .book.open {
-    transform: translateX(200px);
+    transform: translateX(10px);
 }
 
 .book.open .cover {
@@ -46,4 +47,8 @@
 
 .book.open .page {
     box-shadow: 0 0 3px rgb(99, 98, 98);
+}
+
+.back-page {
+    fill: linear-gradient(270deg, #E7E7E7 0%, #FFF 79.5%);
 }
