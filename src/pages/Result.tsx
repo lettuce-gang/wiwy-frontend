@@ -4,6 +4,7 @@ import html2canvas from 'html2canvas';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { ResultData, ResultType } from '../data/ResultData';
 import { getPostPosition } from '../utils/textUtils';
+import 'pretendard/dist/web/static/pretendard.css';
 
 const ResultContainer = styled.div`
   width: 100%;
@@ -98,7 +99,7 @@ const NameDescription = styled.div`
   color: #FFED2C;
   font-size: 1.2rem;
   margin-bottom: 16px;
-  font-family: 'Pretendard-Regular';
+  font-family: Pretendard;
 `;
 
 const DownloadButton = styled.button`
@@ -138,7 +139,7 @@ const ContentSection = styled.div`
 `;
 
 const SectionTitle = styled.div`
-  margin-bottom: 6  px;
+  margin-bottom: 6px;
   font-family: Pretendard;
   color: #FFF;
   font-size: 15px;
@@ -191,6 +192,8 @@ const ButtonIcon = styled.img`
   height: 20px;
   width: auto;
   margin-left: 6px;
+  display: inline-block;
+  vertical-align: middle;
 `;
 
 const ShareIcon = styled(ButtonIcon)`
@@ -217,7 +220,6 @@ const ActionButton = styled.button<{ isShare?: boolean }>`
   border: none;
   cursor: pointer;
   background-color: ${props => props.isShare ? '#F35400' : 'black'};
-  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
