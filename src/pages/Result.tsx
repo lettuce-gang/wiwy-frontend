@@ -1,53 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import html2canvas from 'html2canvas';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { ResultData, ResultType } from '../data/ResultData';
 import { getPostPosition } from '../utils/textUtils';
-import 'pretendard/dist/web/static/pretendard.css';
-
-const ResultContainer = styled.div`
-  width: 100%;
-  height: auto;
-  min-height: 100vh;
-  margin: 0 auto;
-  background-image: url('/images/bg_orange.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 40px 44px 20px; // 상단 패딩 더 늘림
-  overflow-y: auto;
-  box-sizing: border-box; // 박스 사이징 추가
-
-  /* Mobile (0px ~ 479px) */
-  @media screen and (max-width: 479px) {
-    width: 100%;
-    padding: 40px 20px 20px; // 상단 패딩 더 늘림
-    height: auto;
-    min-height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
-
-  /* Tablet (480px ~ 767px) */
-  @media screen and (min-width: 480px) {
-    width: 480px;
-    padding: 40px 0 20px; // 상단 패딩 더 늘림
-  }
-
-  /* Desktop (768px ~ ) */
-  @media screen and (min-width: 768px) {
-    width: 480px;
-    padding: 40px 0 20px; // 상단 패딩 더 늘림
-  }
-`;
+import Container from "../components/Container.tsx";
 
 const ResultCard = styled.div`
   width: 100%;
@@ -55,7 +12,7 @@ const ResultCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: url('/images/bg_orange.png');
+  background-image: url('/images/background/orange.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -103,27 +60,27 @@ const NameDescription = styled.div`
 `;
 
 const DownloadButton = styled.button`
-  width: 100%;
-  background-color: transparent;
-  border: none;
-  color: white;
-  font-size: 0.7rem;
-  font-family: 'Pretendard-Regular';
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  cursor: pointer;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 0.7rem;
+    font-family: 'Pretendard-Regular';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
 
-  &:before {
-    content: '';
-    width: 15px;
-    height: 15px;
-    background-image: url('/images/download_button.svg');
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
+    &:before {
+        content: '';
+        width: 15px;
+        height: 15px;
+        background-image: url('/images/icon/download_button.svg');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
 `;
 
 const ContentSection = styled.div`
@@ -294,12 +251,12 @@ function Result() {
 
             // 캔버스를 이미지로 변환
             const image = canvas.toDataURL('image/png', 1.0);
-            
+
             // 다운로드 링크 생성
             const link = document.createElement('a');
             link.href = image;
             link.download = 'result-image.png';
-            
+
             // 다운로드 트리거
             document.body.appendChild(link);
             link.click();
@@ -315,7 +272,7 @@ function Result() {
 
     const handleShare = async () => {
         const currentUrl = window.location.href;
-        
+
         // Check if Web Share API is supported (mainly mobile devices)
         if (navigator.share) {
             try {
@@ -340,7 +297,7 @@ function Result() {
     };
 
     return (
-        <ResultContainer>
+        <Container backgroundUrl="/images/background/orange.png">
             <ResultCard ref={resultCardRef}>
                 <NameDescription>
                     {userName}{getPostPosition(userName)}
@@ -353,7 +310,7 @@ function Result() {
 
             <ContentSection>
                 <SectionTitle>
-                    <TitleImage src="/images/feature_title.svg" alt="특징" />
+                    <TitleImage src="/images/icon/feature_title.svg" alt="특징" />
                 </SectionTitle>
                 <FeatureContent>
                     {resultData.features.map((feature: string, index: number) => (
@@ -365,7 +322,7 @@ function Result() {
                 </FeatureContent>
 
                 <SectionTitle>
-                    <TitleImage src="/images/bestFriend_title.svg" alt="찰떡 친구" />
+                    <TitleImage src="/images/icon/bestFriend_title.svg" alt="찰떡 친구" />
                 </SectionTitle>
                 <SectionSubTitle>
                     {resultData.bestFriend.title}
@@ -377,7 +334,7 @@ function Result() {
                 </SectionContent>
 
                 <SectionTitle>
-                    <TitleImage src="/images/worstFriend_title.svg" alt="상극 친구" />
+                    <TitleImage src="/images/icon/worstFriend_title.svg" alt="상극 친구" />
                 </SectionTitle>
                 <SectionSubTitle>
                     {resultData.worstFriend.title}
@@ -392,19 +349,19 @@ function Result() {
             <ButtonContainer>
                 <ActionButton onClick={handleShare}>
                     공유하기
-                    <ShareIcon src="/images/share.png" alt="공유하기" />
+                    <ShareIcon src="/images/icon/share.png" alt="공유하기" />
                 </ActionButton>
                 <ActionButton isShare onClick={handleRetry}>
                     다시하기
-                    <ButtonIcon src="/images/retry.png" alt="다시하기" />
+                    <ButtonIcon src="/images/icon/retry.png" alt="다시하기" />
                 </ActionButton>
             </ButtonContainer>
-            
+
             {showCopyToast && (
                 <Toast>URL이 복사되었습니다!</Toast>
             )}
-        </ResultContainer>
+        </Container>
     );
 }
-    
+
 export default Result;

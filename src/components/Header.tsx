@@ -1,10 +1,9 @@
-import React from "react";
 import styled from "styled-components";
 
 function Header() {
   return (
     <Wrapper>
-      <BackBtn src="/images/icon_back.svg" width={7.5} height={15} />
+      <BackBtn src="/images/icon/icon_back.svg" width={7.5} height={15} />
       <Title src="/images/title.svg" width={143} height={15} />
     </Wrapper>
   );
