@@ -60,27 +60,27 @@ const NameDescription = styled.div`
 `;
 
 const DownloadButton = styled.button`
-  width: 100%;
-  background-color: transparent;
-  border: none;
-  color: white;
-  font-size: 0.7rem;
-  font-family: 'Pretendard-Regular';
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  cursor: pointer;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 0.7rem;
+    font-family: 'Pretendard-Regular';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
 
-  &:before {
-    content: '';
-    width: 15px;
-    height: 15px;
-    background-image: url('/images/download_button.svg');
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
+    &:before {
+        content: '';
+        width: 15px;
+        height: 15px;
+        background-image: url('/images/icon/download_button.svg');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
 `;
 
 const ContentSection = styled.div`
@@ -297,7 +297,7 @@ function Result() {
     };
 
     return (
-        <Container backgroundUrl="/images/bg_orange.svg">
+        <Container backgroundUrl="/images/background/orange.svg">
             <ResultCard ref={resultCardRef}>
                 <NameDescription>
                     {userName}{getPostPosition(userName)}
@@ -310,7 +310,7 @@ function Result() {
 
             <ContentSection>
                 <SectionTitle>
-                    <TitleImage src="/images/feature_title.svg" alt="특징" />
+                    <TitleImage src="/images/icon/feature_title.svg" alt="특징" />
                 </SectionTitle>
                 <FeatureContent>
                     {resultData.features.map((feature: string, index: number) => (
@@ -322,7 +322,7 @@ function Result() {
                 </FeatureContent>
 
                 <SectionTitle>
-                    <TitleImage src="/images/bestFriend_title.svg" alt="찰떡 친구" />
+                    <TitleImage src="/images/icon/bestFriend_title.svg" alt="찰떡 친구" />
                 </SectionTitle>
                 <SectionSubTitle>
                     {resultData.bestFriend.title}
@@ -334,7 +334,7 @@ function Result() {
                 </SectionContent>
 
                 <SectionTitle>
-                    <TitleImage src="/images/worstFriend_title.svg" alt="상극 친구" />
+                    <TitleImage src="/images/icon/worstFriend_title.svg" alt="상극 친구" />
                 </SectionTitle>
                 <SectionSubTitle>
                     {resultData.worstFriend.title}
@@ -349,11 +349,11 @@ function Result() {
             <ButtonContainer>
                 <ActionButton onClick={handleShare}>
                     공유하기
-                    <ShareIcon src="/images/share.png" alt="공유하기" />
+                    <ShareIcon src="/images/icon/share.png" alt="공유하기" />
                 </ActionButton>
                 <ActionButton isShare onClick={handleRetry}>
                     다시하기
-                    <ButtonIcon src="/images/retry.png" alt="다시하기" />
+                    <ButtonIcon src="/images/icon/retry.png" alt="다시하기" />
                 </ActionButton>
             </ButtonContainer>
 
