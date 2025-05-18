@@ -10,7 +10,7 @@ function Survey() {
 
   return (
     <Container backgroundUrl="/images/background/blue.png">
-      <Header />
+      <Header onBack={() => {}}/>
       <ProgressBar step={step + 1} />
       <Book step={step} setStep={setStep} />
       <SelectBox step={step} setStep={setStep}/>
