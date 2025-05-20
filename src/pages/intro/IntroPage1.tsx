@@ -9,15 +9,12 @@ import {useUserInfo} from "../../store/useUserInfo.ts";
 import {addCommaToNumberText} from "../../utils/textUtils.ts";
 
 const IntroSection = styled.div`
-    margin-top: 82px;
-    width: 280px;
-    height: 430px;
+    margin: 82px 55px 0 55px;
 `;
 
 const IntroImage = styled.img`
     width: 100%;
     height: 100%;
-    object-fit: contain;
 `;
 
 const InputSection = styled.div`
@@ -39,7 +36,7 @@ const FooterText = styled.p`
     line-height: normal;
 `;
 
-function IntroName() {
+function IntroPage1() {
     const [name, setName] = useState("");
     const userInfo = useUserInfo();
     const userStat = useUserStat();
@@ -82,4 +79,4 @@ function IntroName() {
     );
 }
 
-export default IntroName;
+export default IntroPage1;

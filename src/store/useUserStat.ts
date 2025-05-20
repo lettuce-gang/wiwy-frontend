@@ -26,5 +26,17 @@ export const useUserStat = create<UserStatsState>((set) => ({
             console.error('API 호출 실패:', error);
             set({userCount: 0, callState: 'Error'});
         }
+    },
+
+    /** user count +1 증가 API 호출 */
+    increaseUserCount: async () => {
+        set({callState: 'Loading'});
+        try {
+            const response = await axios.post('/api/stat/user');
+            set({userCount: response.data.userCount ?? 0, callState: 'OK'});
+        } catch (error) {
+            console.error('API 호출 실패:', error);
+            set({userCount: 0, callState: 'Error'});
+        }
     }
 }));

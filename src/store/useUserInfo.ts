@@ -1,15 +1,29 @@
-import { create } from "zustand";
+import {create} from "zustand";
 
 interface UserInfo {
-  name: string;
-  setName: (input: string) => void;
+    name: string;
+    birthday: Date;
+    setName: (input: string) => void;
+    setBirthday: (input: Date) => void;
+}
+
+const initialState: UserInfo = {
+    name: "",
+    birthday: new Date(),
+    setName: async () => {
+    },
+    setBirthday: async () => {
+    },
 }
 
 const useUserInfo = create<UserInfo>(set => ({
-  name: "",
-  setName(input: string) {
-    set({ name: input });
-  },
+    ...initialState,
+    setName(input: string) {
+        set({name: input});
+    },
+    setBirthday(input: Date) {
+        set({birthday: input});
+    }
 }));
 
-export { useUserInfo };
+export {useUserInfo};

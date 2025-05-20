@@ -1,7 +1,7 @@
-import IntroName from "./intro/IntroName.tsx";
+import IntroPage2 from "./intro/IntroPage2.tsx";
 
 function Intro() {
-    return <IntroName />;
+    return <IntroPage2 />;
 }
 
 export default Intro;
