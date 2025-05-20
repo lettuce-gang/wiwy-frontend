@@ -2,10 +2,12 @@ import { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import html2canvas from 'html2canvas';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { ResultData, ResultType } from '../data/ResultData';
+import { ResultData } from '../data/ResultData';
+import { ResultType } from '../types/Types.ts';
 import { getPostPosition } from '../utils/textUtils';
 import Container from "../components/Container.tsx";
 import Header from "../components/Header.tsx";
+import Button from "../components/Button.tsx";
 
 const ResultCard = styled.div`
   width: 100%;
@@ -171,26 +173,6 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const ActionButton = styled.button<{ isShare?: boolean }>`
-  width: 100%;
-  padding: 15px 0;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  background-color: ${props => props.isShare ? '#F35400' : 'black'};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  color: #FFF;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-`;
-
 const Toast = styled.div`
     position: fixed;
     bottom: 20px;
@@ -349,14 +331,14 @@ function Result() {
             </ContentSection>
 
             <ButtonContainer>
-                <ActionButton onClick={handleShare}>
+                <Button onClick={handleShare}>
                     공유하기
                     <ShareIcon src="/images/icon/share.png" alt="공유하기" />
-                </ActionButton>
-                <ActionButton isShare onClick={handleRetry}>
+                </Button>
+                <Button backgroundColor="#F35400" onClick={handleRetry}>
                     다시하기
                     <ButtonIcon src="/images/icon/retry.png" alt="다시하기" />
-                </ActionButton>
+                </Button>
             </ButtonContainer>
 
             {showCopyToast && (

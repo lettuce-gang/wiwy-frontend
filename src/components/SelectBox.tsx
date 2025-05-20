@@ -38,7 +38,6 @@ function SelectBox({ step, setStep }: SelectBoxInterface) {
 export default SelectBox;
 
 const Wrapper = styled.div`
-  margin: 0px 30px;
   display: flex;
   gap: 14px;
   flex-direction: column;

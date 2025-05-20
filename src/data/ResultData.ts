@@ -1,19 +1,4 @@
-export interface ResultType {
-    image: string;
-    features: string[];
-    bestFriend: {
-        title: string;
-        description: string[];
-    };
-    worstFriend: {
-        title: string;
-        description: string[];
-    };
-}
-
-interface ResultDataType {
-    [key: string]: ResultType;
-}
+import {ResultDataType} from "../types/Types.ts";
 
 export const ResultData: ResultDataType = {
     ham: {
@@ -171,13 +156,13 @@ export const ResultData: ResultDataType = {
             ]
         },
         worstFriend: {
-            title: "눈치 없이 제일 신난 사람",  
+            title: "눈치 없이 제일 신난 사람",
             description: [
                 "나는 이미 예상했는데 얘는 계속 움직임.",
-                "눈치 싸움 끝에 그냥 지쳐서 무시함ㅋㅋ" 
+                "눈치 싸움 끝에 그냥 지쳐서 무시함ㅋㅋ"
             ]
         }
     },
 };
 
-export type ResultKey = keyof typeof ResultData; 
+export type ResultKey = keyof typeof ResultData;
