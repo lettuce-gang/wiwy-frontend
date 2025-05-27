@@ -3,7 +3,6 @@
     background-color: white;
     width: 336px;
     height: 410px;
-    border-radius: 0 15px 15px 0;
     margin-top: 10px;
     transform-origin: left;
     transform-style: preserve-3d;
@@ -22,6 +21,7 @@
 }
 
 .back-page {
+    fill: linear-gradient(270deg, #E7E7E7 0%, #FFF 79.5%);
     transform: rotateY(180deg);
     position: absolute;
     width: 100%;

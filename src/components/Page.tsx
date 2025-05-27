@@ -15,7 +15,7 @@ function Page({isFlipped, children, zIndex}: PageProps) {
                 {children}
             </div>
             <div className="back-page">
-                {/* <p>back page</p> */}
+                
             </div>
         </div>
     );
