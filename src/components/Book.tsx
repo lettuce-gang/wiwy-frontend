@@ -33,11 +33,17 @@ function Book({ step }: StepInterface) {
   return (
     <>
       <div className={clsx("book", { open })}>
-        <div className="cover" onClick={handleClickCover} style={{ zIndex: TOTAL_PAGES + 1 }}></div>
+        <div className="cover" onClick={handleClickCover} style={{ zIndex: TOTAL_PAGES + 1 }}>
+          <span className="name">이승현</span>
+        </div>
 
         {Array.from({ length: TOTAL_PAGES }).map((_, i) => (
           <Page isFlipped={i < step}  zIndex={TOTAL_PAGES + (i < step ? i + 1 : -i)}>
             <img src={`/images/survey/survey_${i+1}.png`} />
+            <span className="year">1923</span>
+            <span className="month">02</span>
+            <span className="day">18</span>
+            <span className="week">월</span>
           </Page>
         ))}
 
